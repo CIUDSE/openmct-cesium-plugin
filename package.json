@@ -1,0 +1,19 @@
+{
+  "name": "openmct-plugin-template",
+  "version": "1.0.0",
+  "description": "OpenMCT Yarn and Parcel Plugin Template",
+  "source": "src/plugin.js",
+  "main": "dist/plugin.js",
+  "author": "Robert Serrano Kobylyansky",
+  "license": "MIT",
+  "scripts": {
+    "build": "parcel build",
+    "start": "node copy-openmct-assets.js && parcel index.html --dist-dir ./dev"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.0.0",
+    "openmct": "^2.0.5",
+    "parcel": "^2.8.0",
+    "parcel-resolver-ignore": "^2.1.3"
+  }
+}
