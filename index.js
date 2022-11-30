@@ -1,6 +1,7 @@
 const openmct = require('./node_modules/openmct/dist/openmct');
+import * as Cesium from 'cesium';
 
-import ExamplePlugin from './src/plugin';
+import CesiumPlugin from './src/plugin';
 
 const THIRTY_SECONDS = 30 * 1000;
 const ONE_MINUTE = THIRTY_SECONDS * 2;
@@ -136,6 +137,7 @@ openmct.install(openmct.plugins.Timelist());
 openmct.install(openmct.plugins.BarChart());
 openmct.install(openmct.plugins.ScatterPlot());
 
-openmct.install(ExamplePlugin({'test': 'test'}));
+window.CESIUM_BASE_URL = './cesiumStatic/';
+openmct.install(CesiumPlugin(Cesium));
 
 openmct.start();
