@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import * as Cesium from '../../node_modules/cesium/Build/Cesium/Cesium.js';
+import * as Cesium from 'cesium';
 
 export default {
   inject: ['openmct'],

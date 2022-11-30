@@ -1,5 +1,5 @@
 import CesiumView from './components/CesiumView.vue'
-import { createApp } from '../node_modules/vue/dist/vue.esm-bundler.js';
+import { createApp } from 'vue';
 
 export default function CesiumViewProvider(openmct) {
   return {
