@@ -1,7 +1,7 @@
 import CesiumView from './components/CesiumView.vue'
 import { createApp } from 'vue';
 
-export default function CesiumViewProvider(openmct, Cesium) {
+export default function CesiumViewProvider(openmct) {
   return {
     key: 'cesium',
     name: 'Cesium',
@@ -20,7 +20,6 @@ export default function CesiumViewProvider(openmct, Cesium) {
         show: function (element) {
           app = createApp(CesiumView);
           app.provide('openmct', openmct);
-          app.provide('Cesium', Cesium);
           app.mount(element);
         },
         destroy: function () {

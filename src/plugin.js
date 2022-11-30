@@ -1,6 +1,6 @@
 import CesiumViewProvider from './CesiumViewProvider'
 
-export default function CesiumPlugin (Cesium) {
+export default function CesiumPlugin () {
   return function install (openmct) {
     openmct.types.addType('cesium', {
       name: 'Cesium',
@@ -14,6 +14,6 @@ export default function CesiumPlugin (Cesium) {
       ],
     });
 
-    openmct.objectViews.addProvider(new CesiumViewProvider(openmct, Cesium));
+    openmct.objectViews.addProvider(new CesiumViewProvider(openmct));
   }
 }

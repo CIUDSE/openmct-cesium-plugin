@@ -1,5 +1,4 @@
 const openmct = require('./node_modules/openmct/dist/openmct');
-import * as Cesium from 'cesium';
 
 import CesiumPlugin from './src/plugin';
 
@@ -138,6 +137,6 @@ openmct.install(openmct.plugins.BarChart());
 openmct.install(openmct.plugins.ScatterPlot());
 
 window.CESIUM_BASE_URL = './cesiumStatic/';
-openmct.install(CesiumPlugin(Cesium));
+openmct.install(CesiumPlugin());
 
 openmct.start();
