@@ -7,10 +7,11 @@
   "author": "Robert Serrano Kobylyansky",
   "license": "MIT",
   "scripts": {
-    "build": "parcel build",
+    "build": "parcel build --reporter @parcel/reporter-bundle-analyzer",
     "start": "node copy-openmct-assets.js && node copy-cesium-static.js && parcel index.html --dist-dir ./dev"
   },
   "devDependencies": {
+    "@parcel/reporter-bundle-analyzer": "^2.8.0",
     "@parcel/transformer-vue": "2.8.0",
     "assert": "^2.0.0",
     "browserify-zlib": "^0.2.0",
