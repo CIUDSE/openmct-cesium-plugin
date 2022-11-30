@@ -1,4 +1,8 @@
-# OpenMCT Plugin Template for Yarn and Parcel
+# Cesium OpenMCT Plugin
+
+![screenshot](./screenshots/cesium-plugin.webp)
+
+Example usage in `index.js`
 
 `yarn build` to create a bundle in `./dist`
 
