@@ -2,8 +2,10 @@
 
 ![screenshot](./screenshots/cesium-plugin.webp)
 
-Example usage in `index.js`
+Example usage in `index.js`.
 
-`yarn build` to create a bundle in `./dist`
+`yarn install` to install dependencies.
 
-`yarn start` to create a devserver with openmct and your plugin
+`yarn build` to create a bundle in `./dist`.
+
+`yarn start` to create a devserver with openmct and your plugin.
