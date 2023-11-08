@@ -10,7 +10,7 @@ export default function CesiumViewProvider(openmct) {
       return domainObject.type === 'cesium';
     },
     canEdit: function (domainObject) {
-      if (domainObject.tyjp === 'cesium') {
+      if (domainObject.type === 'cesium') {
         return true;
       }
     },
