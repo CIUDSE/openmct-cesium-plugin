@@ -35,5 +35,6 @@
   "alias": {
     "vue": "./node_modules/vue/dist/vue.esm-bundler.js",
     "cesium": "./node_modules/cesium/Source/Cesium.js"
-  }
+  },
+  "packageManager": "yarn@4.0.1"
 }
