@@ -3,16 +3,15 @@
 </template>
 
 <script>
-import * as Cesium from 'cesium';
+import * as Cesium from 'cesium'
 
 export default {
-  inject: ['openmct'],
+  inject: ['openmct', 'domainObject'],
   data() {
-    return {
-      viewer: null
-    }
+    return {}
   },
   mounted() {
+    console.debug('CesiumView::mounted called')
     this.viewer = new Cesium.Viewer('cesiumContainer', {
       imageryProvider: new Cesium.TileMapServiceImageryProvider({
         url: Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII')
@@ -34,6 +33,34 @@ export default {
       shouldAnimate: false,
       shadows: false
     })
+    this.composition = this.openmct.composition.get(this.domainObject)
+    this.composition.on('add', this.addTelemetryObject)
+    this.composition.on('remove', this.removeTelemetryObject)
+    this.composition.load()
+  },
+  beforeUnmount() {
+    this.removeAllSubscriptions();
+    this.composition.off('add', this.addTelemetryObject)
+    this.composition.off('remove', this.removeTelemetryObject)
+  },
+  methods: {
+    addTelemetryObject(telemetryObject) {
+      console.debug('CesiumView::addTelemetryObject called with', telemetryObject)
+      const key = this.openmct.objects.makeKeyString(telemetryObject.identifier)
+      console.debug('CesiumView::addTelemetryObject', key)
+    },
+    removeTelemetryObject(identifier) {
+      console.debug('CesiumView::removeTelemetryObject called with', identifier)
+      const key = this.openmct.objects.makeKeyString(identifier)
+      console.debug('CesiumView::removeTelemetryObject', key)
+    },
+    subscribeToObject(telemetryObject) {
+      console.debug('CesiumView::subscribeToObject called with', telemetryObject)
+      const key = this.openmct.makeKeyString(telemetryObject.identifier);
+    },
+    removeAllSubscriptions() {
+      console.debug('CesiumView::removeAllSubscriptions called')
+    }
   }
 }
 </script>

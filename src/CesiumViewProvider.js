@@ -19,6 +19,7 @@ export default function CesiumViewProvider(openmct) {
         show: function (element) {
           app = createApp(CesiumView);
           app.provide('openmct', openmct);
+          app.provide('domainObject', domainObject)
           app.mount(element);
         },
         destroy: function () {
