@@ -1,8 +1,9 @@
+import CesiumCompositionPolicy from './CesiumCompositionPolicy';
 import CesiumViewProvider from './CesiumViewProvider'
 
 export default function CesiumPlugin () {
   return function install (openmct) {
-    openmct.types.addType('cesium', {
+        openmct.types.addType('cesium', {
       name: 'Cesium',
       description: 'Graphically visualize geodetic data',
       creatable: true,
@@ -15,5 +16,7 @@ export default function CesiumPlugin () {
     });
 
     openmct.objectViews.addProvider(new CesiumViewProvider(openmct));
+
+    openmct.composition.addPolicy(CesiumCompositionPolicy(openmct).allow);
   }
 }

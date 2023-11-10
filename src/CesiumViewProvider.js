@@ -1,18 +1,17 @@
+import { CESIUM_VIEW, CESIUM_KEY } from './CesiumConstants';
 import CesiumView from './components/CesiumView.vue'
 import { createApp } from 'vue';
 
 export default function CesiumViewProvider(openmct) {
   return {
-    key: 'cesium',
+    key: CESIUM_VIEW,
     name: 'Cesium',
     cssClass: 'icon-telemetry',
     canView: function (domainObject) {
-      return domainObject.type === 'cesium';
+      return domainObject.type === CESIUM_KEY;
     },
     canEdit: function (domainObject) {
-      if (domainObject.type === 'cesium') {
-        return true;
-      }
+      return domainObject.type === CESIUM_KEY;
     },
     view: function (domainObject) {
       let app;
