@@ -33,6 +33,7 @@ export default {
       shouldAnimate: false,
       shadows: false
     })
+    this.subscriptions = new Map();
     this.composition = this.openmct.composition.get(this.domainObject)
     this.composition.on('add', this.addTelemetryObject)
     this.composition.on('remove', this.removeTelemetryObject)
@@ -46,20 +47,43 @@ export default {
   methods: {
     addTelemetryObject(telemetryObject) {
       console.debug('CesiumView::addTelemetryObject called with', telemetryObject)
-      const key = this.openmct.objects.makeKeyString(telemetryObject.identifier)
-      console.debug('CesiumView::addTelemetryObject', key)
+      const metadata = this.openmct.telemetry.getMetadata(telemetryObject)
+      console.debug('CesiumView::addTelemetryObject metadata', metadata)
+      this.subscribeToObject(telemetryObject)
     },
     removeTelemetryObject(identifier) {
       console.debug('CesiumView::removeTelemetryObject called with', identifier)
       const key = this.openmct.objects.makeKeyString(identifier)
       console.debug('CesiumView::removeTelemetryObject', key)
+      if ( this.subscriptions.has(key) ) {
+        const unsubscribe = this.subscriptions.get(key)
+        console.debug('CesiumView::removeTelemetryObject calling unsubscribe for', key, identifier, unsubscribe)
+        unsubscribe()
+      } else {
+        console.error('CesiumView::removeTelemetryObject requested telemetry object removal for', key, identifier,
+          'but subscription is not present. Current subscriptions:', this.subscriptions)
+      }
     },
     subscribeToObject(telemetryObject) {
       console.debug('CesiumView::subscribeToObject called with', telemetryObject)
-      const key = this.openmct.makeKeyString(telemetryObject.identifier);
+      const key = this.openmct.objects.makeKeyString(telemetryObject.identifier);
+      const f = function(datum) { this.newData(telemetryObject, datum) }
+      const unsubscribe = this.openmct.telemetry.subscribe(telemetryObject, f.bind(this))
+      this.subscriptions.set(key, unsubscribe)
     },
     removeAllSubscriptions() {
       console.debug('CesiumView::removeAllSubscriptions called')
+      for ( const [key, unsubscribe] of this.subscriptions ) {
+        console.debug('CesiumView::removeAllSubscriptions calling unsubscribe for', key, unsubscribe)
+        unsubscribe();
+      }
+      this.subscriptions.clear()
+    },
+    newData(telemetryObject, datum) {
+      const key = this.openmct.objects.makeKeyString(telemetryObject.identifier)
+      if (!this.subscriptions.has(key)) {
+        console.error('CesiumView::newData called, but there is no subscription active for ', key, telemetryObject)
+      }
     }
   }
 }
