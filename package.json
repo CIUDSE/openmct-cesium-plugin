@@ -2,7 +2,7 @@
   "name": "openmct-cesium-plugin",
   "version": "1.0.0",
   "description": "OpenMCT Plugin for visualizing 3D trajectories on a Cesium globe",
-  "source": "src/plugin.js",
+  "source": "src/plugin.ts",
   "main": "dist/plugin.js",
   "author": "Robert Serrano Kobylyansky",
   "license": "MIT",
