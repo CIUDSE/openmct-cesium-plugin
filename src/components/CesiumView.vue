@@ -2,7 +2,7 @@
   <div id="cesiumContainer" style="height: 100%;"></div>
 </template>
 
-<script>
+<script lang="ts">
 import * as Cesium from 'cesium'
 
 export default {
@@ -18,7 +18,6 @@ export default {
       }),
       terrainProvider: new Cesium.EllipsoidTerrainProvider(),
       animation: false,
-      baseLayerPick: false,
       fullscreenButton: false,
       vrButton: false,
       geocoder: false,
