@@ -4,7 +4,7 @@ import { OpenMCT } from '../node_modules/openmct/dist/openmct';
 
 export default function CesiumPlugin () {
   return function install (openmct: OpenMCT) {
-        openmct.types.addType('cesium', {
+    openmct.types.addType('cesium', {
       name: 'Cesium',
       description: 'Graphically visualize geodetic data',
       creatable: true,
