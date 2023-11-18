@@ -1,5 +1,5 @@
 import CesiumCompositionPolicy from './CesiumCompositionPolicy';
-import CesiumViewProvider from './CesiumViewProvider'
+import { CesiumViewProvider } from './CesiumViewProvider'
 import { OpenMCT } from '../node_modules/openmct/dist/openmct';
 
 export default function CesiumPlugin () {
@@ -16,7 +16,7 @@ export default function CesiumPlugin () {
       ],
     });
 
-    openmct.objectViews.addProvider(CesiumViewProvider(openmct));
+    openmct.objectViews.addProvider(new CesiumViewProvider(openmct));
 
     openmct.composition.addPolicy(CesiumCompositionPolicy(openmct).allow);
   }
