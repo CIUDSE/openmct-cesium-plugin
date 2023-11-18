@@ -1,19 +1,25 @@
 import { CESIUM_KEY } from "./CesiumConstants"
+import { OpenMCT } from "../node_modules/openmct/dist/openmct"
 
-export default function CesiumCompositionPolicy(openmct) {
-    console.debug('CesiumCompositionPolicy', 'called')
+export class CesiumCompositionPolicy {
+    openmct: OpenMCT
 
-    function hasGeodesicTelemetry(domainObject) {
-        let metadata = openmct.telemetry.getMetadata(domainObject)
+    constructor(openmct: OpenMCT) {
+        console.debug('CesiumCompositionPolicy constructor called')
+        this.openmct = openmct
+    }
+
+
+    hasGeodesicTelemetry(domainObject: any) {
+        let metadata = this.openmct.telemetry.getMetadata(domainObject)
         console.debug('CesiumCompositionPolicy::hasGeodesicTelemetry', 'got domain object', domainObject, 'with metadata', metadata)
         return true
     }
     
-    return {
-        allow: function (parent, child) {
-            if ( parent.type !== CESIUM_KEY ) { return true }
-            console.debug('CesiumCompositionPolicy::allow called with', parent, child)
-            return hasGeodesicTelemetry(child)
-        }
+    
+    allow(parent: any, child: any) {
+        if ( parent.type !== CESIUM_KEY ) { return true }
+        console.debug('CesiumCompositionPolicy::allow called with', parent, child)
+        return this.hasGeodesicTelemetry(child)
     }
 }

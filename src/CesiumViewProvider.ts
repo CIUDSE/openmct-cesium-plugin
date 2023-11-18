@@ -38,7 +38,7 @@ class CesiumView {
     this.domainObject = domainObject
   }
 
-  show(element) {
+  show(element: string | Element) {
     this.app = createApp(CesiumViewComponent);
     this.app.provide('openmct', this.openmct);
     this.app.provide('domainObject', this.domainObject)

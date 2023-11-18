@@ -1,4 +1,4 @@
-import CesiumCompositionPolicy from './CesiumCompositionPolicy';
+import { CesiumCompositionPolicy } from './CesiumCompositionPolicy';
 import { CesiumViewProvider } from './CesiumViewProvider'
 import { OpenMCT } from '../node_modules/openmct/dist/openmct';
 
@@ -9,7 +9,7 @@ export default function CesiumPlugin () {
       description: 'Graphically visualize geodetic data',
       creatable: true,
       cssClass: 'icon-telemetry',
-      initialize: function (domainObject) {
+      initialize: function (domainObject: any) {
         domainObject.composition = []
       },
       form: [ // stuff to add to the create new object dialog
@@ -18,6 +18,7 @@ export default function CesiumPlugin () {
 
     openmct.objectViews.addProvider(new CesiumViewProvider(openmct));
 
-    openmct.composition.addPolicy(CesiumCompositionPolicy(openmct).allow);
+    const cesiumCompositionPolicy = new CesiumCompositionPolicy(openmct);
+    openmct.composition.addPolicy(cesiumCompositionPolicy.allow.bind(cesiumCompositionPolicy));
   }
 }
