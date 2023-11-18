@@ -4321,7 +4321,7 @@ __metadata:
     events: "npm:^3.1.0"
     fs-extra: "npm:^11.0.0"
     https-browserify: "npm:^1.0.0"
-    openmct: "npm:^3.0.2"
+    openmct: "file:./openmct"
     parcel: "npm:^2.8.0"
     parcel-resolver-ignore: "npm:^2.1.3"
     process: "npm:^0.11.10"
@@ -4336,10 +4336,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"openmct@npm:^3.0.2":
-  version: 3.1.0
-  resolution: "openmct@npm:3.1.0"
-  checksum: 69759a808c276ed09cdd9213212c14aa757f8aa61455ffb3ab89d1a04718c85044ed02d636f743c343d8b6dd6cd37f4a516898e667d2f6c3d34ae2bbc5a20f80
+"openmct@file:./openmct::locator=openmct-cesium-plugin%40workspace%3A.":
+  version: 3.2.0-next
+  resolution: "openmct@file:./openmct#./openmct::hash=df04dc&locator=openmct-cesium-plugin%40workspace%3A."
+  checksum: dac608006965bc7b4722102533635e2d48ac67fcf3646e9faa55eb5dc4d6ba5985c3d2c81a7608d1792733e3d33a5a8d59d9f56639befd8b5efbb7523795538e
   languageName: node
   linkType: hard
 

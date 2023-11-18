@@ -1,7 +1,7 @@
 import { CESIUM_VIEW, CESIUM_KEY } from './CesiumConstants'
 import CesiumViewComponent from './components/CesiumView.vue'
 import { type App, createApp } from 'vue'
-import { type OpenMCT } from '../node_modules/openmct/dist/openmct'
+import { type OpenMCT } from '../openmct/dist/openmct'
 
 export class CesiumViewProvider {
   key = CESIUM_KEY

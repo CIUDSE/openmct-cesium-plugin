@@ -1,5 +1,5 @@
 import { CESIUM_KEY } from './CesiumConstants'
-import { type OpenMCT } from '../node_modules/openmct/dist/openmct'
+import { type OpenMCT } from '../openmct/dist/openmct'
 
 export class CesiumCompositionPolicy {
   openmct: OpenMCT
