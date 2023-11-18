@@ -1,0 +1,3 @@
+[submodule "openmct"]
+	path = openmct
+	url = https://github.com/CIUDSE/openmct.git
