@@ -1,2 +1,2 @@
-export const CESIUM_KEY = 'cesium';
-export const CESIUM_VIEW = 'cesium.view';
+export const CESIUM_KEY = 'cesium'
+export const CESIUM_VIEW = 'cesium.view'

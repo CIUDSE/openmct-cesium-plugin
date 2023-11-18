@@ -1,6 +1,6 @@
-import { CesiumCompositionPolicy } from './CesiumCompositionPolicy';
+import { CesiumCompositionPolicy } from './CesiumCompositionPolicy'
 import { CesiumViewProvider } from './CesiumViewProvider'
-import { OpenMCT } from '../node_modules/openmct/dist/openmct';
+import { type OpenMCT } from '../node_modules/openmct/dist/openmct'
 
 export default function CesiumPlugin () {
   return function install (openmct: OpenMCT) {
@@ -13,12 +13,12 @@ export default function CesiumPlugin () {
         domainObject.composition = []
       },
       form: [ // stuff to add to the create new object dialog
-      ],
-    });
+      ]
+    })
 
-    openmct.objectViews.addProvider(new CesiumViewProvider(openmct));
+    openmct.objectViews.addProvider(new CesiumViewProvider(openmct))
 
-    const cesiumCompositionPolicy = new CesiumCompositionPolicy(openmct);
-    openmct.composition.addPolicy(cesiumCompositionPolicy.allow.bind(cesiumCompositionPolicy));
+    const cesiumCompositionPolicy = new CesiumCompositionPolicy(openmct)
+    openmct.composition.addPolicy(cesiumCompositionPolicy.allow.bind(cesiumCompositionPolicy))
   }
 }
