@@ -1,6 +1,6 @@
-import openmct from './openmct/dist/openmct'
+import openmct from '../../openmct/dist/openmct'
 
-import CesiumPlugin from './src/plugin'
+import CesiumPlugin from '../src/plugin'
 
 const THIRTY_SECONDS = 30 * 1000
 const ONE_MINUTE = THIRTY_SECONDS * 2
