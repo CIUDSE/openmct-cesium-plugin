@@ -1383,7 +1383,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^6.4.0":
+"@typescript-eslint/parser@npm:^6.11.0, @typescript-eslint/parser@npm:^6.4.0":
   version: 6.11.0
   resolution: "@typescript-eslint/parser@npm:6.11.0"
   dependencies:
@@ -4398,6 +4398,7 @@ __metadata:
     "@parcel/reporter-bundle-analyzer": "npm:2.8.0"
     "@parcel/transformer-vue": "npm:2.8.0"
     "@typescript-eslint/eslint-plugin": "npm:^6.4.0"
+    "@typescript-eslint/parser": "npm:^6.11.0"
     "@vue/tsconfig": "npm:^0.4.0"
     assert: "npm:^2.0.0"
     browserify-zlib: "npm:^0.2.0"
