@@ -3,8 +3,8 @@
 const fs = require('fs-extra')
 const path = require('path');
 
-const cesiumPath = path.join(__dirname, 'node_modules', 'cesium', 'Build', 'Cesium');
-const distPath = path.join(__dirname, 'dev', 'cesiumStatic');
+const cesiumPath = path.join(__dirname, '..', 'node_modules', 'cesium', 'Build', 'Cesium');
+const distPath = path.join(__dirname, '..', 'dev', 'cesiumStatic');
 
 // Create the dist folder if it doesn't exist + parent folders
 fs.mkdirSync(distPath, { recursive: true });

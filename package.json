@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "parcel build --reporter @parcel/reporter-bundle-analyzer",
-    "start": "node copy-openmct-assets.js && node copy-cesium-static.js && parcel example/index.html --dist-dir ./dev"
+    "start": "node scripts/copy-openmct-assets.js && node scripts/copy-cesium-static.js && parcel example/index.html --dist-dir ./dev"
   },
   "devDependencies": {
     "@parcel/reporter-bundle-analyzer": "^2.8.0",

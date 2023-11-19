@@ -3,8 +3,8 @@
 const fs = require('fs-extra')
 const path = require('path');
 
-const openmctPath = path.join(__dirname, 'openmct', 'dist');
-const distPath = path.join(__dirname, 'dev', 'openmctAssets');
+const openmctPath = path.join(__dirname, '..', 'openmct', 'dist');
+const distPath = path.join(__dirname, '..', 'dev', 'openmctAssets');
 
 // Create the dist folder if it doesn't exist + parent folders
 fs.mkdirSync(distPath, { recursive: true });
