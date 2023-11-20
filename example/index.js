@@ -1,4 +1,4 @@
-import openmct from "../../openmct/dist/openmct";
+import openmct from "../openmct/dist/openmct";
 
 import CesiumPlugin from "../src/plugin";
 
