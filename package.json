@@ -9,7 +9,7 @@
   "scripts": {
     "build": "yarn lint && parcel build --reporter @parcel/reporter-bundle-analyzer",
     "start": "node scripts/copy-openmct-assets.js && node scripts/copy-cesium-static.js && parcel example/index.html --dist-dir ./dev",
-    "lint": "yarn eslint ."
+    "lint": "yarn eslint . && yarn prettier . --check"
   },
   "devDependencies": {
     "@parcel/reporter-bundle-analyzer": "2.8.0",
