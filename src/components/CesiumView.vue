@@ -2,121 +2,104 @@
   <div id="cesiumContainer" style="height: 100%"></div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import * as Cesium from "cesium";
+import { inject, onBeforeUnmount, onMounted } from "vue";
+import { OpenMCT } from "../../openmct/dist/openmct";
+import type {
+  DomainObject,
+  Identifier,
+} from "../../openmct/dist/src/api/objects/ObjectAPI";
 
-export default {
-  inject: ["openmct", "domainObject"],
-  data() {
-    return {};
-  },
-  mounted() {
-    console.debug("CesiumView::mounted called");
-    this.viewer = new Cesium.Viewer("cesiumContainer", {
-      terrainProvider: new Cesium.EllipsoidTerrainProvider(),
-      animation: false,
-      fullscreenButton: false,
-      vrButton: false,
-      geocoder: false,
-      homeButton: false,
-      infoBox: false,
-      sceneModePicker: true,
-      selectionIndicator: false,
-      timeline: false,
-      navigationHelpButton: false,
-      navigationInstructionsInitiallyVisible: false,
-      scene3DOnly: false,
-      shouldAnimate: false,
-      shadows: false,
-    });
-    this.subscriptions = new Map();
-    this.composition = this.openmct.composition.get(this.domainObject);
-    this.composition.on("add", this.addTelemetryObject);
-    this.composition.on("remove", this.removeTelemetryObject);
-    this.composition.load();
-  },
-  beforeUnmount() {
-    this.removeAllSubscriptions();
-    this.composition.off("add", this.addTelemetryObject);
-    this.composition.off("remove", this.removeTelemetryObject);
-  },
-  methods: {
-    addTelemetryObject(telemetryObject) {
-      console.debug(
-        "CesiumView::addTelemetryObject called with",
-        telemetryObject,
-      );
-      const metadata = this.openmct.telemetry.getMetadata(telemetryObject);
-      console.debug("CesiumView::addTelemetryObject metadata", metadata);
-      this.subscribeToObject(telemetryObject);
-    },
-    removeTelemetryObject(identifier) {
-      console.debug(
-        "CesiumView::removeTelemetryObject called with",
-        identifier,
-      );
-      const key = this.openmct.objects.makeKeyString(identifier);
-      console.debug("CesiumView::removeTelemetryObject", key);
-      if (this.subscriptions.has(key)) {
-        const unsubscribe = this.subscriptions.get(key);
-        console.debug(
-          "CesiumView::removeTelemetryObject calling unsubscribe for",
-          key,
-          identifier,
-          unsubscribe,
-        );
-        unsubscribe();
-      } else {
-        console.error(
-          "CesiumView::removeTelemetryObject requested telemetry object removal for",
-          key,
-          identifier,
-          "but subscription is not present. Current subscriptions:",
-          this.subscriptions,
-        );
-      }
-    },
-    subscribeToObject(telemetryObject) {
-      console.debug(
-        "CesiumView::subscribeToObject called with",
-        telemetryObject,
-      );
-      const key = this.openmct.objects.makeKeyString(
-        telemetryObject.identifier,
-      );
-      const f = function (datum) {
-        this.newData(telemetryObject, datum);
-      };
-      const unsubscribe = this.openmct.telemetry.subscribe(
-        telemetryObject,
-        f.bind(this),
-      );
-      this.subscriptions.set(key, unsubscribe);
-    },
-    removeAllSubscriptions() {
-      console.debug("CesiumView::removeAllSubscriptions called");
-      for (const [key, unsubscribe] of this.subscriptions) {
-        console.debug(
-          "CesiumView::removeAllSubscriptions calling unsubscribe for",
-          key,
-          unsubscribe,
-        );
-        unsubscribe();
-      }
-      this.subscriptions.clear();
-    },
-    newData(telemetryObject, datum) {
-      const key = this.openmct.objects.makeKeyString(
-        telemetryObject.identifier,
-      );
-      if (!this.subscriptions.has(key)) {
-        console.error(
-          "CesiumView::newData called, but there is no subscription active for ",
-          key,
-          telemetryObject,
-        );
-      }
-    },
-  },
+const openmctInjection = inject<OpenMCT>("openmct");
+if (openmctInjection === undefined) {
+  throw "CesiumView: openmct is undefined";
+}
+const openmct = openmctInjection;
+const domainObject = inject<DomainObject>("domainObject");
+if (domainObject === undefined) {
+  throw "CesiumView: domainObject is undefined";
+}
+
+const viewerOptions = {
+  terrainProvider: new Cesium.EllipsoidTerrainProvider(),
+  animation: false,
+  fullscreenButton: false,
+  vrButton: false,
+  geocoder: false,
+  homeButton: false,
+  infoBox: false,
+  sceneModePicker: true,
+  selectionIndicator: false,
+  timeline: false,
+  navigationHelpButton: false,
+  navigationInstructionsInitiallyVisible: false,
+  scene3DOnly: false,
+  shouldAnimate: false,
+  shadows: false,
 };
+
+var viewer: Cesium.Viewer | undefined = undefined;
+const subscriptions = new Map<string, CallableFunction>();
+const composition = openmct.composition.get(domainObject);
+
+function addTelemetryObject(telemetryObject: DomainObject) {
+  const metadata = openmct.telemetry.getMetadata(telemetryObject);
+  subscribeToObject(telemetryObject);
+}
+
+function subscribeToObject(telemetryObject: DomainObject) {
+  const key = openmct.objects.makeKeyString(telemetryObject.identifier);
+  const f = function (datum: any) {
+    newData(telemetryObject, datum);
+  };
+  const unsubscribe = openmct.telemetry.subscribe(telemetryObject, f, {});
+  subscriptions.set(key, unsubscribe);
+}
+
+function removeTelemetryObject(identifier: Identifier) {
+  const key = openmct.objects.makeKeyString(identifier);
+  const unsubscribe = subscriptions.get(key);
+  if (unsubscribe !== undefined) {
+    unsubscribe();
+  } else {
+    console.error(
+      "CesiumView::removeTelemetryObject requested telemetry object removal for",
+      key,
+      identifier,
+      "but subscription is not present. Current subscriptions:",
+      subscriptions,
+    );
+  }
+}
+
+function removeAllSubscriptions() {
+  for (const [_key, unsubscribe] of subscriptions) {
+    unsubscribe();
+  }
+  subscriptions.clear();
+}
+
+function newData(telemetryObject: DomainObject, datum: any) {
+  const key = openmct.objects.makeKeyString(telemetryObject.identifier);
+  if (!subscriptions.has(key)) {
+    console.error(
+      "CesiumView::newData called, but there is no subscription active for ",
+      key,
+      telemetryObject,
+    );
+  }
+}
+
+onMounted(() => {
+  viewer = new Cesium.Viewer("cesiumContainer", viewerOptions);
+  composition.on("add", addTelemetryObject);
+  composition.on("remove", removeTelemetryObject);
+});
+
+onBeforeUnmount(() => {
+  removeAllSubscriptions();
+  composition.off("add", addTelemetryObject);
+  composition.off("remove", removeTelemetryObject);
+});
 </script>
