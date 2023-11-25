@@ -13,9 +13,6 @@ export default {
   mounted() {
     console.debug("CesiumView::mounted called");
     this.viewer = new Cesium.Viewer("cesiumContainer", {
-      imageryProvider: new Cesium.TileMapServiceImageryProvider({
-        url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
-      }),
       terrainProvider: new Cesium.EllipsoidTerrainProvider(),
       animation: false,
       fullscreenButton: false,
