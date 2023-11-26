@@ -2,10 +2,12 @@ import { CesiumCompositionPolicy } from "./CesiumCompositionPolicy";
 import { CesiumViewProvider } from "./CesiumViewProvider";
 import { type OpenMCT } from "../openmct/dist/openmct";
 import type { DomainObject } from "../openmct/dist/src/api/objects/ObjectAPI";
+import { CESIUM_KEY, MOCK_ORBIT_KEY } from "./constants";
+import { MockOrbitProvider } from "./MockOrbitProvider";
 
-export default function CesiumPlugin() {
+export function CesiumPlugin() {
   return function install(openmct: OpenMCT) {
-    openmct.types.addType("cesium", {
+    openmct.types.addType(CESIUM_KEY, {
       name: "Cesium",
       description: "Graphically visualize geodetic data",
       creatable: true,
@@ -26,4 +28,38 @@ export default function CesiumPlugin() {
       cesiumCompositionPolicy.allow.bind(cesiumCompositionPolicy),
     );
   };
+}
+
+export function MockOrbitGeneratorPlugin() {
+  return function install(openmct: OpenMCT) {
+    openmct.types.addType(MOCK_ORBIT_KEY, {
+      name: "Mock Orbit",
+      creatable: true,
+      cssClass: "icon-telemetry",
+      telemetry: {
+        values: [
+          {
+            key: "latitude",
+            name: "Latitude"
+          },
+          {
+            key: "longitude",
+            name: "Longitude",
+            hints: {
+              range: 1
+            }
+          },
+          {
+            key: "utc",
+            name: "Timestamp",
+            hints: {
+              domain: 1
+            }
+          }
+        ]
+      }
+    })
+
+    openmct.telemetry.addProvider(MockOrbitProvider())
+  }
 }

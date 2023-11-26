@@ -1,4 +1,4 @@
-import { CESIUM_KEY } from "./CesiumConstants";
+import { CESIUM_KEY } from "./constants";
 import CesiumViewComponent from "./components/CesiumView.vue";
 import { type App, createApp } from "vue";
 import { type OpenMCT } from "../openmct/dist/openmct";

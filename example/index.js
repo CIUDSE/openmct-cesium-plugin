@@ -1,6 +1,6 @@
 import openmct from "../openmct/dist/openmct";
 
-import CesiumPlugin from "../src/plugin";
+import { CesiumPlugin, MockOrbitGeneratorPlugin } from "../src/plugin";
 
 const THIRTY_SECONDS = 30 * 1000;
 const ONE_MINUTE = THIRTY_SECONDS * 2;
@@ -154,6 +154,7 @@ openmct.install(openmct.plugins.BarChart());
 openmct.install(openmct.plugins.ScatterPlot());
 
 openmct.install(CesiumPlugin());
+openmct.install(MockOrbitGeneratorPlugin());
 
 document.addEventListener("DOMContentLoaded", function () {
   openmct.start();

@@ -1,4 +1,4 @@
-import { CESIUM_KEY } from "./CesiumConstants";
+import { CESIUM_KEY } from "./constants";
 import { type OpenMCT } from "../openmct/dist/openmct";
 import { type DomainObject } from "../openmct/dist/src/api/objects/ObjectAPI";
 import type TelemetryAPI from "../openmct/dist/src/api/telemetry/TelemetryAPI";
